@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Requests;
-
+namespace App\Http\Requests\Category;
 
 use Illuminate\Validation\Rules;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class StoreProductRequest extends FormRequest
+class StoreCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,21 +25,10 @@ class StoreProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-             'product_name' => 'required',
-            // 'brand_id' => 'required',
-            // 'category_id' => 'required',
-             'product_code' => 'required',
-            'product_tags' => 'required',
-            // 'product_size' => 'required',
-             // 'product_color' => 'required',
-            'selling_price' => 'required',
-            'discount_price' => 'required',
+           'category_name'=>'required',
+            'category_image'=>'required',
 
-              'short_descp' => 'required',
-            'long_descp' => 'required',
-            // 'status' => 'required',
-          
-          
+
         ];
     }
 
@@ -57,7 +45,5 @@ class StoreProductRequest extends FormRequest
             'data'      => $validator->errors()
         ]));
     }
-
-
 
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api_controller\Category;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\Category\StoreCategoryRequest;
 
 use Intervention\Image\Facades\Image;
 //use Image;
@@ -37,7 +38,7 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
         $image = $request->file('category_image');
 
@@ -52,12 +53,6 @@ class CategoryController extends Controller
             'category_image' => $save_url, 
         ]);
 
-        //dd($save_url);
-
-    //    $notification = array(
-    //         'message' => 'Category Inserted Successfully',
-    //         'alert-type' => 'success'
-    //     );
 
         return response()->json([
          

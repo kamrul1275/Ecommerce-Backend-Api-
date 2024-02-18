@@ -64,22 +64,39 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
 
-        $image = $request->file('product_thambnail');
-        $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-        Image::make($image)->resize(800,800)->save('upload/products/thambnail/'.$name_gen);
-        $save_url = 'upload/products/thambnail/'.$name_gen;
+          // Check if the product thumbnail is uploaded
+    // if ($request->hasFile('product_thumbnail')) {
+    //     // Get the uploaded file
+    //     $image = $request->file('product_thumbnail');
+        
+    //     // Generate a unique name for the image
+    //     $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+        
+    //     // Resize and save the image
+    //     Image::make($image)->resize(800, 800)->save('upload/products/thumbnail/' . $name_gen);
+        
+    //     // Construct the URL for the saved image
+    //     $save_url = 'upload/products/thumbnail/' . $name_gen;
+    // } else {
+    //     // Handle the case where the product thumbnail is not uploaded
+    //     // For example, set a default image URL or return an error response
+    //     $save_url = 'default-thumbnail.jpg'; // Set a default image URL
+    //     // You can also return a response indicating that the product thumbnail is required
+    //     return response()->json([
+    //         'status' => 'error',
+    //         'message' => 'Product thumbnail is required',
+    //     ], 400);
+    // }
 
-
-        //dd($save_url);
 
 
 
 
         $product_id = Product::insertGetId([
 
-            'brand_id' => $request->brand_id,
+            // 'brand_id' => $request->brand_id,
 
-            'category_id' => $request->category_id,
+            // 'category_id' => $request->category_id,
             'subcategory_id' => $request->subcategory_id,
             'product_name' => $request->product_name,
             // 'product_slug' => strtolower(str_replace(' ','-',$request->product_name)),
@@ -87,15 +104,15 @@ class ProductController extends Controller
             'product_code' => $request->product_code,
             'product_qty' => $request->product_qty,
             'product_tags' => $request->product_tags,
-            'product_size' => $request->product_size,
-            'product_color' => $request->product_color,
+            // 'product_size' => $request->product_size,
+            // 'product_color' => $request->product_color,
 
             'selling_price' => $request->selling_price,
             'discount_price' => $request->discount_price,
             'short_descp' => $request->short_descp,
             'long_descp' => $request->long_descp, 
 
-            'status' => 1,
+            // 'status' => 1,
             'created_at' => Carbon::now(),
 
             // return redirect()->back();
@@ -105,25 +122,25 @@ class ProductController extends Controller
 
 
 
-        $images = $request->file('multi_img');
-        foreach($images as $img){
-            $make_name = hexdec(uniqid()).'.'.$img->getClientOriginalExtension();
-        Image::make($img)->resize(800,800)->save('upload/products/multi-image/'.$make_name);
-        $uploadPath = 'upload/products/multi-image/'.$make_name;
+//         $images = $request->file('multi_img');
+//         foreach($images as $img){
+//             $make_name = hexdec(uniqid()).'.'.$img->getClientOriginalExtension();
+//         Image::make($img)->resize(800,800)->save('upload/products/multi-image/'.$make_name);
+//         $uploadPath = 'upload/products/multi-image/'.$make_name;
 
-//    dd($uploadPath);
+// //    dd($uploadPath);
 
-// return $uploadPath;
+// // return $uploadPath;
 
-    Product_Image::insert([
+//     Product_Image::insert([
 
-            'product_id' =>$product_id,
-            //dd($request->product_id),
-            'photo_name' => $uploadPath,
-            'created_at' => Carbon::now(), 
+//             'product_id' =>$product_id,
+//             //dd($request->product_id),
+//             'photo_name' => $uploadPath,
+//             'created_at' => Carbon::now(), 
 
-        ]); 
-        } // end foreach
+//         ]); 
+//         } // end foreach
 
       
         return response()->json([

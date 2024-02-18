@@ -5,6 +5,8 @@ namespace App\Http\Controllers\api_controller\Brand;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use Illuminate\Http\Request;
+use App\Http\Resources\Brand\brandResource;
+
 use Intervention\Image\Facades\Image;
 
 class BrandControllerr extends Controller
@@ -15,6 +17,8 @@ class BrandControllerr extends Controller
     public function index()
     {
         $brands= Brand::get();
+
+        // return new brandResource ($brands;
          
         return response()->json([
          
@@ -35,27 +39,47 @@ class BrandControllerr extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
+public function store(Request $request)
+{
+    // Check if file was uploaded
+    if ($request->hasFile('brand_image')) {
         $image = $request->file('brand_image');
-        $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-        Image::make($image)->resize(300,300)->save('upload/brand/'.$name_gen);
-        $save_url = 'upload/brand/'.$name_gen;
+        
+        // Check if file is valid
+        if ($image->isValid()) {
+            $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
+            $save_url = 'upload/brand/' . $name_gen;
+            
+            // Resize and save the image
+            Image::make($image)->resize(300, 300)->save(public_path($save_url));
 
-       $brands= Brand::insert([
-            'brand_name' => $request->brand_name,
-            'brand_slug' => strtolower(str_replace(' ', '-',$request->brand_name)),
-            'brand_image' => $save_url, 
-        ]);
-
-    
-        return response()->json([
-         
-            'stastus'=>'success',
-            'message'=>'Brand Inserted Successfully',
-            'data'=>$brands,
+            $brands = Brand::create([
+                'brand_name' => $request->brand_name,
+                'brand_slug' => strtolower(str_replace(' ', '-', $request->brand_name)),
+                'brand_image' => $save_url,
             ]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Brand Inserted Successfully',
+                'data' => $brands,
+            ]);
+        } else {
+            // Handle invalid file
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Invalid file uploaded.',
+            ], 400);
+        }
+    } else {
+        // Handle case where no file was uploaded
+        return response()->json([
+            'status' => 'error',
+            'message' => 'No file uploaded.',
+        ], 400);
     }
+}
+
 
     /**
      * Display the specified resource.
