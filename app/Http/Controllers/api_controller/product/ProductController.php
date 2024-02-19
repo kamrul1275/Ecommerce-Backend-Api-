@@ -104,8 +104,8 @@ class ProductController extends Controller
             'product_code' => $request->product_code,
             'product_qty' => $request->product_qty,
             'product_tags' => $request->product_tags,
-            // 'product_size' => $request->product_size,
-            // 'product_color' => $request->product_color,
+             'product_size' => $request->product_size,
+             'product_color' => $request->product_color,
 
             'selling_price' => $request->selling_price,
             'discount_price' => $request->discount_price,

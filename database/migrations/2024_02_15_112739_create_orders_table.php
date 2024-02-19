@@ -13,20 +13,8 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-           
-            $table->unsignedBigInteger('product_id')->nullable();
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('set null') ->onUpdate('cascade');
-
             $table->decimal('total_ammount');
             $table->string('order_date');
-
-
-            $table->unsignedBigInteger('created_by')->nullable();
-            $table->unsignedBigInteger('modified_by')->nullable();
-            
-            $table->foreign('created_by')->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
-
-            $table->foreign('modified_by')->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
             $table->timestamps();
         });
     }

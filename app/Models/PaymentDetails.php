@@ -25,4 +25,7 @@ class PaymentDetails extends Model
         return $this->belongsToMany(Order::class);
     }
 
+
+    
+
 }

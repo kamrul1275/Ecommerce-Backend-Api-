@@ -59,20 +59,23 @@ class User extends Authenticatable
 
 
 
-
-
-
-
-
-
-
-
     public function hasRole($role)
     {
         return $this->roles->contains('name', $role);
     }
 
 
+
+    public function orders_item(){
+        return $this->hasMany(OrderIteam::class);
+    }
+    //end methhod
+
+
+    public function payment_details(){
+        return $this->hasMany(PaymentDetails::class);
+    }
+    //end methhod
 
 
 }

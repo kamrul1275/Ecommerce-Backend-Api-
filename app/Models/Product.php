@@ -42,5 +42,11 @@ class Product extends Model
         return $this->belongsTo(Product_Image::class);
      }//end method
 
+     function order_iteams(){
+
+        return $this->hasMany(OrderIteam::class);
+    }//end method
+
+
 
 }

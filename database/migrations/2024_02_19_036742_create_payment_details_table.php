@@ -15,15 +15,15 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null') ->onUpdate('cascade');
-            $table->integer('ammount');
+           
+            $table->unsignedBigInteger('order_id')->nullable();
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('set null') ->onUpdate('cascade');
+
+            $table->decimal('ammount');
             $table->integer('account_no');
             $table->string('payment_type');
-            $table->unsignedBigInteger('created_by')->nullable();
-            $table->unsignedBigInteger('modified_by')->nullable();
-            
-            $table->foreign('created_by')->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
-
-            $table->foreign('modified_by')->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
+            $table->timestamps();
+           
         });
     }
 

@@ -5,6 +5,7 @@ use App\Http\Controllers\api_controller\AuthControlller;
 use App\Http\Controllers\api_controller\Brand\BrandControllerr;
 use App\Http\Controllers\api_controller\Category\CategoryController;
 use App\Http\Controllers\api_controller\order\OrderController;
+use App\Http\Controllers\api_controller\order_iteam\Order_IteamController;
 use App\Http\Controllers\api_controller\PageController;
 use App\Http\Controllers\api_controller\payment\PaymentController;
 use App\Http\Controllers\api_controller\Permission\PermissionController;
@@ -160,4 +161,6 @@ Route::resource('brands',BrandControllerr::class);
 Route::resource('payments',PaymentController::class);
 
 Route::resource('orders',OrderController::class);
+
+ Route::resource('order_iteams',Order_IteamController::class);
 

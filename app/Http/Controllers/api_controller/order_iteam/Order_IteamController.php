@@ -1,26 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\api_controller\payment;
+namespace App\Http\Controllers\api_controller\order_iteam;
 
 use App\Http\Controllers\Controller;
-use App\Models\PaymentDetails;
+use App\Models\OrderIteam;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class PaymentController extends Controller
+class Order_IteamController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $PaymentDetails= PaymentDetails::get();
+        $oders= OrderIteam::get();
          
         return response()->json([
          
         'stastus'=>'success',
-        'message'=>'Payment List',
-        'data'=>$PaymentDetails,
+        'message'=>'Order iteam List',
+        'data'=>$oders,
         ]);
     }
 
@@ -37,28 +36,21 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        $PaymentDetails=PaymentDetails::insert([
-           
-            'user_id' => $request->user_id,
+        $orderItem = OrderIteam::create([
+            'product_id' => $request->product_id,
             'order_id' => $request->order_id,
+            'quanty'=> $request->quanty,
             'ammount' => $request->ammount,
-            'account_no' => $request->account_no,
-            'payment_type' => $request->payment_type,
-
-            'payment_date'=>$request->payment_date,
-            // 'created_by' =>  Auth::user()->id,
-            // 'modified_by' =>  Auth::user()->id,
-           
+            'order_date' => $request->order_date,
         ]);
-
+    
         return response()->json([
-         
-            'stastus'=>'success',
-            'message'=>'Payment Create Succesfully',
-            'data'=>$PaymentDetails,
-            ]);
-
+            'status' => 'success',
+            'message' => 'Order created successfully',
+            'data' => $orderItem,
+        ]);
     }
+    
 
     /**
      * Display the specified resource.
@@ -89,17 +81,6 @@ class PaymentController extends Controller
      */
     public function destroy(string $id)
     {
-
-        //return "oky";
-        $PaymentDetails = PaymentDetails::findOrFail($id);
-
-       $PaymentDetails=PaymentDetails::findOrFail($id)->delete();
-
-        return response()->json([
-         
-            'stastus'=>'success',
-            'message'=>'Payment Deleted Successfully',
-            'data'=>$PaymentDetails,
-            ]);
+        //
     }
 }

@@ -15,21 +15,10 @@ class Order extends Model
     protected $guarded= [];
 
 
-    
-
-    public function payments()
-    {
-        return $this->hasOne(PaymentDetails::class);
+    public function payment_details(){
+        return $this->hasMany(PaymentDetails::class);
     }
-    //end product method
-
-
-    public function users()
-    {
-        return $this->belonhagsTo(User::class);
-    }// end method
-
-
+    //end methhod
 
 
 }

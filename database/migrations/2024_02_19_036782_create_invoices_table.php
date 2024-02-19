@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null') ->onUpdate('cascade');
+    
+            $table->string('quanty');
+            $table->decimal('sale_price');
+            $table->string('payment_type');
             $table->timestamps();
         });
     }

@@ -35,25 +35,31 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $orders=Order::insert([
-           
-            'total_ammount' => $request->total_ammount,
-            'product_id' => $request->product_id,
-            'order_date' => $request->order_date,
-            // 'created_by' =>  Auth::user()->id,
-            // 'modified_by' =>  Auth::user()->id,
-           
-        ]);
+   public function store(Request $request)
+{
+    // Check if user is authenticated
+    // if (!Auth::check()) {
+    //     return response()->json([
+    //         'status' => 'error',
+    //         'message' => 'User not authenticated',
+    //     ], 401); // Unauthorized status code
+    // }
 
-        return response()->json([
-         
-            'stastus'=>'success',
-            'message'=>'Order Create Succesfully',
-            'data'=>$orders,
-            ]);
-    }
+    // Now it's safe to access the authenticated user
+    $orders = Order::create([
+        'total_ammount' => $request->total_ammount,
+        // 'product_id' => $request->product_id,
+        'order_date' => $request->order_date,
+        // 'created_by' => Auth::user()->id,
+        // 'modified_by' => Auth::user()->id,
+    ]);
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Order created successfully',
+        'data' => $orders,
+    ]);
+}
 
     /**
      * Display the specified resource.
